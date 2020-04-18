@@ -62,3 +62,8 @@ class TrackerWidget(MainWidget):
         self.add_expense_action = None
         self.remove_expense_action = None
         self.exit_action = None
+        self.rupee_action = None
+        self.dollar_action = None
+        self.euro_action = None
+        self.british_pound_action = None
+        self.japanese_yen_action = None

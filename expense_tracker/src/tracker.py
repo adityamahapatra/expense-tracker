@@ -19,6 +19,7 @@ class ExpenseTracker(TrackerWidget):
         self.setWindowTitle("Expense Jar")
         self.center()
         self.setup_file_menu()
+        self.setup_currency_menu()
 
     # noinspection PyTypeChecker
     def connections(self):
@@ -48,6 +49,39 @@ class ExpenseTracker(TrackerWidget):
         self.exit_action.setShortcut("Ctrl+Q")
         file_menu.addSeparator()
         file_menu.addAction(self.exit_action)
+
+    def setup_currency_menu(self):
+        currency_menu = self.menu.addMenu("Currency")
+
+        rupee_icon = QtGui.QIcon(constants.RUPEE_ICON)
+        self.rupee_action = QtWidgets.QAction("Rupee", self)
+        self.rupee_action.setIcon(rupee_icon)
+        self.rupee_action.setStatusTip("Rupee")
+        currency_menu.addAction(self.rupee_action)
+
+        dollar_icon = QtGui.QIcon(constants.DOLLAR_ICON)
+        self.dollar_action = QtWidgets.QAction("Dollar", self)
+        self.dollar_action.setIcon(dollar_icon)
+        self.dollar_action.setStatusTip("Dollar")
+        currency_menu.addAction(self.dollar_action)
+
+        euro_icon = QtGui.QIcon(constants.EURO_ICON)
+        self.euro_action = QtWidgets.QAction("Euro", self)
+        self.euro_action.setIcon(euro_icon)
+        self.euro_action.setStatusTip("Euro")
+        currency_menu.addAction(self.euro_action)
+
+        british_pound_icon = QtGui.QIcon(constants.BRITISH_POUND_ICON)
+        self.british_pound_action = QtWidgets.QAction("British Pound", self)
+        self.british_pound_action.setIcon(british_pound_icon)
+        self.british_pound_action.setStatusTip("British Pound")
+        currency_menu.addAction(self.british_pound_action)
+
+        japanese_yen_icon = QtGui.QIcon(constants.JAPANESE_YEN_ICON)
+        self.japanese_yen_action = QtWidgets.QAction("Japanese Yen", self)
+        self.japanese_yen_action.setIcon(japanese_yen_icon)
+        self.japanese_yen_action.setStatusTip("Japanese Yen")
+        currency_menu.addAction(self.japanese_yen_action)
 
 
 def main():
