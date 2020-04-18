@@ -22,6 +22,7 @@ class ExpenseTracker(TrackerWidget):
         self.setup_currency_menu()
         self.setup_help_menu()
         self.setup_expense_table()
+        self.setup_data_feed()
 
     # noinspection PyTypeChecker
     def connections(self):
@@ -102,10 +103,24 @@ class ExpenseTracker(TrackerWidget):
         help_menu.addAction(self.about_action)
 
     def setup_expense_table(self):
+        self.left_layout = QtWidgets.QVBoxLayout()
+        self.main_layout.addLayout(self.left_layout)
         self.expense_table_view = QtWidgets.QTableView()
-        self.main_layout.addWidget(self.expense_table_view, 0, 0)
+        self.left_layout.addWidget(self.expense_table_view)
         self.expense_table_view.setAlternatingRowColors(True)
         self.display_expense_data()
+        self._set_column_width()
+
+    def _set_column_width(self):
+        self.expense_table_view.horizontalHeader().setSectionResizeMode(
+            0, QtWidgets.QHeaderView.Stretch
+        )
+        self.expense_table_view.horizontalHeader().setSectionResizeMode(
+            1, QtWidgets.QHeaderView.Stretch
+        )
+        self.expense_table_view.horizontalHeader().setSectionResizeMode(
+            2, QtWidgets.QHeaderView.Stretch
+        )
 
     def display_expense_data(self):
         model = QtGui.QStandardItemModel()
@@ -114,6 +129,45 @@ class ExpenseTracker(TrackerWidget):
         model.setHorizontalHeaderLabels(headers)
         model.setVerticalHeaderLabels(indices)
         self.expense_table_view.setModel(model)
+
+    def setup_data_feed(self):
+        self.right_layout = QtWidgets.QVBoxLayout()
+        self.main_layout.addLayout(self.right_layout)
+
+        self.data_entry_layout = QtWidgets.QGridLayout()
+        self.right_layout.addLayout(self.data_entry_layout)
+        self.category_label = QtWidgets.QLabel("Category")
+        self.category_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.data_entry_layout.addWidget(self.category_label, 0, 0)
+        self.category_field = QtWidgets.QLineEdit()
+        self.category_field.setPlaceholderText("Enter category")
+        self.data_entry_layout.addWidget(self.category_field, 1, 0)
+        self.price_label = QtWidgets.QLabel("Amount")
+        self.price_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.data_entry_layout.addWidget(self.price_label, 0, 1)
+        self.price_field = QtWidgets.QLineEdit()
+        self.price_field.setPlaceholderText("Enter amount")
+        self.data_entry_layout.addWidget(self.price_field, 1, 1)
+        self.right_layout.addSpacing(5)
+
+        self.calender = QtWidgets.QCalendarWidget()
+        self.right_layout.addWidget(self.calender)
+
+        self.expense_buttons_layout = QtWidgets.QHBoxLayout()
+        self.right_layout.addLayout(self.expense_buttons_layout)
+        self.add_button = QtWidgets.QPushButton("Add")
+        self.add_button.setStatusTip("Add the expense")
+        self.expense_buttons_layout.addWidget(self.add_button)
+        self.remove_button = QtWidgets.QPushButton("Remove")
+        self.remove_button.setStatusTip("Remove the expense")
+        self.expense_buttons_layout.addWidget(self.remove_button)
+
+        self.graph_toggle_button = QtWidgets.QPushButton("Toggle")
+        self.graph_toggle_button.setStatusTip(
+            "Toggle the graph view between a pie-chart or a bar graph"
+        )
+        self.right_layout.addWidget(self.graph_toggle_button)
+        self.right_layout.addStretch()
 
 
 def main():
@@ -134,7 +188,7 @@ def main():
     splash_screen.showMessage(
         message, alignment=QtCore.Qt.AlignCenter | QtCore.Qt.AlignBottom,
     )
-    time.sleep(0.5)
+    time.sleep(2)
     window = ExpenseTracker()
     window.setFocus()
     window.show()

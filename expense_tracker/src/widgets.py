@@ -12,7 +12,7 @@ class MainWidget(QtWidgets.QMainWindow):
         self.setWindowIcon(QtGui.QIcon(constants.EXPENSES_ICON))
         central_widget = QtWidgets.QWidget()
         self.setCentralWidget(central_widget)
-        self.main_layout = QtWidgets.QGridLayout()
+        self.main_layout = QtWidgets.QHBoxLayout()
         central_widget.setLayout(self.main_layout)
 
     @staticmethod
@@ -69,4 +69,16 @@ class TrackerWidget(MainWidget):
         self.japanese_yen_action = None
         self.contact_action = None
         self.about_action = None
+        self.left_layout = None
+        self.right_layout = None
+        self.data_entry_layout = None
         self.expense_table_view = None
+        self.category_label = None
+        self.category_field = None
+        self.price_label = None
+        self.price_field = None
+        self.calender = None
+        self.expense_buttons_layout = None
+        self.add_button = None
+        self.remove_button = None
+        self.graph_toggle_button = None
