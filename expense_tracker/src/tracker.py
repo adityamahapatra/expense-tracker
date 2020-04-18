@@ -14,6 +14,10 @@ class ExpenseTracker(TrackerWidget):
 
     def initUI(self):
         self.setWindowTitle("Expense Tracker")
+        self.setStyleSheet(
+            "background-color: #303030;"
+            "color: silver;"
+        )
         self.center()
 
 
