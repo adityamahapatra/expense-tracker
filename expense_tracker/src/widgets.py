@@ -67,3 +67,5 @@ class TrackerWidget(MainWidget):
         self.euro_action = None
         self.british_pound_action = None
         self.japanese_yen_action = None
+        self.contact_action = None
+        self.about_action = None

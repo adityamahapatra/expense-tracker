@@ -20,6 +20,7 @@ class ExpenseTracker(TrackerWidget):
         self.center()
         self.setup_file_menu()
         self.setup_currency_menu()
+        self.setup_help_menu()
 
     # noinspection PyTypeChecker
     def connections(self):
@@ -82,6 +83,22 @@ class ExpenseTracker(TrackerWidget):
         self.japanese_yen_action.setIcon(japanese_yen_icon)
         self.japanese_yen_action.setStatusTip("Japanese Yen")
         currency_menu.addAction(self.japanese_yen_action)
+
+    def setup_help_menu(self):
+        help_menu = self.menu.addMenu("Help")
+
+        contact_icon = QtGui.QIcon(constants.CONTACT_ICON)
+        self.contact_action = QtWidgets.QAction("Contact Me", self)
+        self.contact_action.setIcon(contact_icon)
+        self.contact_action.setStatusTip("Get in touch with the author")
+        help_menu.addAction(self.contact_action)
+
+        about_icon = QtGui.QIcon(constants.ABOUT_ICON)
+        self.about_action = QtWidgets.QAction("About", self)
+        self.about_action.setIcon(about_icon)
+        self.about_action.setStatusTip("Display App Information")
+        help_menu.addSeparator()
+        help_menu.addAction(self.about_action)
 
 
 def main():
