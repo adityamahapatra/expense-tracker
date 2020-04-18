@@ -55,9 +55,6 @@ def main():
     application.setStyle("Plastique")
     pixmap = QtGui.QPixmap(constants.SPLASH_SCREEN_IMAGE)
     splash_screen = QtWidgets.QSplashScreen(pixmap)
-    splash_screen.setWindowFlags(
-        QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
-    )
     splash_screen.show()
     message = """
     <p style="width:20px;
@@ -69,9 +66,7 @@ def main():
     </p>
     """
     splash_screen.showMessage(
-        message,
-        alignment=QtCore.Qt.AlignCenter | QtCore.Qt.AlignBottom,
-        color=QtCore.Qt.white
+        message, alignment=QtCore.Qt.AlignCenter | QtCore.Qt.AlignBottom,
     )
     time.sleep(4)
     window = ExpenseTracker()
