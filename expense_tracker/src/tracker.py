@@ -125,7 +125,7 @@ class ExpenseTracker(TrackerWidget):
     def display_expense_data(self):
         model = QtGui.QStandardItemModel()
         headers = ["Category", "Amount", "Date"]
-        indices = [str(i) for i in range(1, 11)]
+        indices = [str(i) for i in range(1, 51)]
         model.setHorizontalHeaderLabels(headers)
         model.setVerticalHeaderLabels(indices)
         self.expense_table_view.setModel(model)
@@ -139,15 +139,27 @@ class ExpenseTracker(TrackerWidget):
         self.category_label = QtWidgets.QLabel("Category")
         self.category_label.setAlignment(QtCore.Qt.AlignHCenter)
         self.data_entry_layout.addWidget(self.category_label, 0, 0)
+        self.custom_category_label = QtWidgets.QLabel("Custom")
+        self.custom_category_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.data_entry_layout.addWidget(self.custom_category_label, 0, 1)
+        self.category_list = QtWidgets.QComboBox()
+        self.category_list.setMinimumWidth(195)
+        self.category_list.setStatusTip("Choose from a list of category presets")
+        self.category_list.addItems(sorted(self.categories))
+        self.data_entry_layout.addWidget(self.category_list, 1, 0)
         self.category_field = QtWidgets.QLineEdit()
-        self.category_field.setPlaceholderText("Enter category")
-        self.data_entry_layout.addWidget(self.category_field, 1, 0)
+        self.category_field.setPlaceholderText("Enter custom category")
+        self.category_field.setStatusTip(
+            "Enter a custom category not available in the list of presets"
+        )
+        self.data_entry_layout.addWidget(self.category_field, 1, 1)
         self.price_label = QtWidgets.QLabel("Amount")
         self.price_label.setAlignment(QtCore.Qt.AlignHCenter)
-        self.data_entry_layout.addWidget(self.price_label, 0, 1)
+        self.right_layout.addWidget(self.price_label)
         self.price_field = QtWidgets.QLineEdit()
         self.price_field.setPlaceholderText("Enter amount")
-        self.data_entry_layout.addWidget(self.price_field, 1, 1)
+        self.price_field.setStatusTip("Enter the expense amount")
+        self.right_layout.addWidget(self.price_field)
         self.right_layout.addSpacing(5)
 
         self.calender = QtWidgets.QCalendarWidget()

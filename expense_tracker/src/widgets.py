@@ -74,6 +74,7 @@ class TrackerWidget(MainWidget):
         self.data_entry_layout = None
         self.expense_table_view = None
         self.category_label = None
+        self.custom_category_label = None
         self.category_field = None
         self.price_label = None
         self.price_field = None
@@ -82,3 +83,21 @@ class TrackerWidget(MainWidget):
         self.add_button = None
         self.remove_button = None
         self.graph_toggle_button = None
+        self.category_list = None
+        self.categories = [
+            "Groceries",
+            "Rent",
+            "Movies",
+            "Restaurants",
+            "Liquor",
+            "Utilities",
+            "Shopping",
+            "Services",
+            "Education",
+            "Investments",
+            "Gifts",
+            "Travel",
+            "Fuel",
+            "Medical Expenses",
+            "Miscellaneous",
+        ]
