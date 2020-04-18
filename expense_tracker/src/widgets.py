@@ -69,3 +69,4 @@ class TrackerWidget(MainWidget):
         self.japanese_yen_action = None
         self.contact_action = None
         self.about_action = None
+        self.expense_table_view = None

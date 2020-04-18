@@ -21,6 +21,7 @@ class ExpenseTracker(TrackerWidget):
         self.setup_file_menu()
         self.setup_currency_menu()
         self.setup_help_menu()
+        self.setup_expense_table()
 
     # noinspection PyTypeChecker
     def connections(self):
@@ -100,6 +101,20 @@ class ExpenseTracker(TrackerWidget):
         help_menu.addSeparator()
         help_menu.addAction(self.about_action)
 
+    def setup_expense_table(self):
+        self.expense_table_view = QtWidgets.QTableView()
+        self.main_layout.addWidget(self.expense_table_view, 0, 0)
+        self.expense_table_view.setAlternatingRowColors(True)
+        self.display_expense_data()
+
+    def display_expense_data(self):
+        model = QtGui.QStandardItemModel()
+        headers = ["Category", "Amount", "Date"]
+        indices = [str(i) for i in range(1, 11)]
+        model.setHorizontalHeaderLabels(headers)
+        model.setVerticalHeaderLabels(indices)
+        self.expense_table_view.setModel(model)
+
 
 def main():
     application = QtWidgets.QApplication(sys.argv)
@@ -119,7 +134,7 @@ def main():
     splash_screen.showMessage(
         message, alignment=QtCore.Qt.AlignCenter | QtCore.Qt.AlignBottom,
     )
-    time.sleep(4)
+    time.sleep(0.5)
     window = ExpenseTracker()
     window.setFocus()
     window.show()
