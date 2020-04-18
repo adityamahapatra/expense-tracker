@@ -1,4 +1,5 @@
 import sys
+import time
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -15,7 +16,7 @@ class ExpenseTracker(TrackerWidget):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
     def initUI(self):
-        self.setWindowTitle("Expense Tracker")
+        self.setWindowTitle("Expense Jar")
         self.center()
         self.setup_file_menu()
 
@@ -52,9 +53,31 @@ class ExpenseTracker(TrackerWidget):
 def main():
     application = QtWidgets.QApplication(sys.argv)
     application.setStyle("Plastique")
+    pixmap = QtGui.QPixmap(constants.SPLASH_SCREEN_IMAGE)
+    splash_screen = QtWidgets.QSplashScreen(pixmap)
+    splash_screen.setWindowFlags(
+        QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
+    )
+    splash_screen.show()
+    message = """
+    <p style="width:20px;
+              height:20px;
+              color:silver;
+              font-size:10px;
+              font-family:'Ink Free';">
+        <b><i>- Aditya Mahapatra</i></b>
+    </p>
+    """
+    splash_screen.showMessage(
+        message,
+        alignment=QtCore.Qt.AlignCenter | QtCore.Qt.AlignBottom,
+        color=QtCore.Qt.white
+    )
+    time.sleep(4)
     window = ExpenseTracker()
     window.setFocus()
     window.show()
+    splash_screen.finish(window)
     sys.exit(application.exec_())
 
 
