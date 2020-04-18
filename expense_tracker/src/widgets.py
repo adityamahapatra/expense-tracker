@@ -5,22 +5,21 @@ import expense_tracker.src.constants as constants
 
 class MainWidget(QtWidgets.QMainWindow):
 
-    APP_ICON = QtGui.QIcon(constants.CREDIT_CARDS)
-
     def __init__(self, parent=None):
-        super(MainWidget, self).__init__(parent)
+        super().__init__(parent=parent)
         self.setWindowFlags(QtCore.Qt.Window)
-        self.setGeometry(150, 150, 830, 600)
-        self.setWindowIcon(self.APP_ICON)
+        self.setGeometry(150, 150, 800, 600)
+        self.setWindowIcon(QtGui.QIcon(constants.CREDIT_CARDS))
         central_widget = QtWidgets.QWidget()
         self.setCentralWidget(central_widget)
-        self.main_layout = QtWidgets.QVBoxLayout()
+        self.main_layout = QtWidgets.QGridLayout()
         central_widget.setLayout(self.main_layout)
 
-    def message_box(self, title=None, message=None):
+    @staticmethod
+    def message_box(title=None, message=None):
         if message:
             message_box_ = QtWidgets.QMessageBox()
-            message_box_.setWindowIcon(self.APP_ICON)
+            message_box_.setWindowIcon(QtGui.QIcon(constants.CREDIT_CARDS))
             message_box_.setIcon(QtWidgets.QMessageBox.Warning)
             if not title:
                 message_box_.setWindowTitle('Info')
@@ -45,3 +44,9 @@ class MainWidget(QtWidgets.QMainWindow):
         center_point = QtWidgets.QApplication.desktop().screenGeometry(screen).center()
         frame_geometry.moveCenter(center_point)
         self.move(frame_geometry.topLeft())
+
+
+class TrackerWidget(MainWidget):
+
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
