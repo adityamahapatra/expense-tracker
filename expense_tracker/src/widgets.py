@@ -9,7 +9,7 @@ class MainWidget(QtWidgets.QMainWindow):
         super().__init__(parent=parent)
         self.setWindowFlags(QtCore.Qt.Window)
         self.setGeometry(150, 150, 800, 600)
-        self.setWindowIcon(QtGui.QIcon(constants.CREDIT_CARDS))
+        self.setWindowIcon(QtGui.QIcon(constants.EXPENSES_ICON))
         central_widget = QtWidgets.QWidget()
         self.setCentralWidget(central_widget)
         self.main_layout = QtWidgets.QGridLayout()
@@ -19,7 +19,7 @@ class MainWidget(QtWidgets.QMainWindow):
     def message_box(title=None, message=None):
         if message:
             message_box_ = QtWidgets.QMessageBox()
-            message_box_.setWindowIcon(QtGui.QIcon(constants.CREDIT_CARDS))
+            message_box_.setWindowIcon(QtGui.QIcon(constants.EXPENSES_ICON))
             message_box_.setIcon(QtWidgets.QMessageBox.Warning)
             if not title:
                 message_box_.setWindowTitle('Info')
@@ -28,14 +28,21 @@ class MainWidget(QtWidgets.QMainWindow):
             message_box_.setText(message)
             message_box_.exec_()
 
-    # noinspection PyTypeChecker,PyCallByClass
     def confirm_box(self, title=None, msg=None):
         choice = QtWidgets.QMessageBox.question(
             self, title, msg, QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
         )
         return True if choice == QtWidgets.QMessageBox.Yes else False
 
-    # noinspection PyArgumentList
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        confirmation = self.confirm_box(
+            title="Exit", msg="Are you sure you wish to exit the app?"
+        )
+        if not confirmation:
+            event.ignore()
+        else:
+            event.accept()
+
     def center(self):
         frame_geometry = self.frameGeometry()
         screen = QtWidgets.QApplication.desktop().screenNumber(
@@ -52,3 +59,6 @@ class TrackerWidget(MainWidget):
         super().__init__(parent=parent)
         self.menu = self.menuBar()
         self.status = self.statusBar()
+        self.add_expense_action = None
+        self.remove_expense_action = None
+        self.exit_action = None
