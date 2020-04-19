@@ -207,7 +207,7 @@ class ExpenseTracker(TrackerWidget):
             return False
         custom_category = self.custom_category_field.text()
         preset_category = self.category_list.currentText()
-        category = custom_category or preset_category
+        category = custom_category.capitalize() or preset_category
         date = self.calender.selectedDate()
         print(f"Added {amount} under {category} on {date.toString()}")
         self.visualise_data()

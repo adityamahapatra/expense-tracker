@@ -108,4 +108,6 @@ class TrackerWidget(MainWidget):
             "Fuel",
             "Medical Expenses",
             "Miscellaneous",
+            "Electronics",
+            "Furniture",
         ]
