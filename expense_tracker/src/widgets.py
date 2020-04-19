@@ -17,11 +17,14 @@ class MainWidget(QtWidgets.QMainWindow):
         central_widget.setLayout(self.main_layout)
 
     @staticmethod
-    def message_box(title=None, message=None):
+    def message_box(title=None, message=None, icon=None):
         if message:
             message_box_ = QtWidgets.QMessageBox()
             message_box_.setWindowIcon(QtGui.QIcon(constants.EXPENSES_ICON))
-            message_box_.setIcon(QtWidgets.QMessageBox.Warning)
+            if not icon:
+                message_box_.setIcon(QtWidgets.QMessageBox.Warning)
+            else:
+                message_box_.setIcon(icon)
             if not title:
                 message_box_.setWindowTitle('Info')
             else:
