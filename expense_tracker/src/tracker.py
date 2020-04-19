@@ -31,6 +31,7 @@ class ExpenseTracker(TrackerWidget):
         self.add_expense_action.triggered.connect(self.add_expense)
         self.remove_button.clicked.connect(self.remove_expense)
         self.remove_expense_action.triggered.connect(self.remove_expense)
+        self.contact_action.triggered.connect(self.contact_me)
 
     def setup_file_menu(self):
         file_menu = self.menu.addMenu("File")
@@ -217,6 +218,13 @@ class ExpenseTracker(TrackerWidget):
 
     def visualise_data(self):
         pass
+
+    def contact_me(self):
+        self.message_box(
+            title="Developer E-mail",
+            message="adityamahapatra@protonmail.com",
+            icon=QtWidgets.QMessageBox.Information
+        )
 
 
 def main():
