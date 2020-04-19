@@ -112,6 +112,12 @@ class ExpenseTracker(TrackerWidget):
         self.expense_table_view = QtWidgets.QTableView()
         self.left_layout.addWidget(self.expense_table_view)
         self.expense_table_view.setAlternatingRowColors(True)
+        self.expense_table_view.setSelectionBehavior(
+            QtWidgets.QAbstractItemView.SelectRows
+        )
+        self.expense_table_view.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
         self.display_expense_data()
         self._set_column_width()
 
@@ -200,7 +206,7 @@ class ExpenseTracker(TrackerWidget):
             return False
         custom_category = self.custom_category_field.text()
         preset_category = self.category_list.currentText()
-        category = custom_category if custom_category else preset_category
+        category = custom_category or preset_category
         date = self.calender.selectedDate()
         print(f"Added {amount} under {category} on {date.toString()}")
         self.visualise_data()
