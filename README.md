@@ -1,2 +1,2 @@
-# expenses-tracker
+# expense-tracker
 A simple expense tracking tool.
