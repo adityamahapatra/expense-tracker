@@ -153,16 +153,13 @@ class ExpenseTracker(TrackerWidget):
             "Enter a custom category not available in the list of presets"
         )
         self.data_entry_layout.addWidget(self.category_field, 1, 1)
-        self.price_label = QtWidgets.QLabel("Amount")
-        self.price_label.setAlignment(QtCore.Qt.AlignHCenter)
-        self.right_layout.addWidget(self.price_label)
         self.price_field = QtWidgets.QLineEdit()
         self.price_field.setPlaceholderText("Enter amount")
         self.price_field.setStatusTip("Enter the expense amount")
         self.right_layout.addWidget(self.price_field)
-        self.right_layout.addSpacing(5)
 
         self.calender = QtWidgets.QCalendarWidget()
+        self.calender.setMaximumHeight(175)
         self.right_layout.addWidget(self.calender)
 
         self.expense_buttons_layout = QtWidgets.QHBoxLayout()
@@ -174,12 +171,14 @@ class ExpenseTracker(TrackerWidget):
         self.remove_button.setStatusTip("Remove the expense")
         self.expense_buttons_layout.addWidget(self.remove_button)
 
-        self.graph_toggle_button = QtWidgets.QPushButton("Toggle")
-        self.graph_toggle_button.setStatusTip(
-            "Toggle the graph view between a pie-chart or a bar graph"
-        )
-        self.right_layout.addWidget(self.graph_toggle_button)
-        self.right_layout.addStretch()
+        self.data_visualization_tabs = QtWidgets.QTabWidget()
+        self.right_layout.addWidget(self.data_visualization_tabs)
+        self.bar_graph_tab = QtWidgets.QWidget()
+        self.pie_chart_tab = QtWidgets.QWidget()
+        self.line_graph_tab = QtWidgets.QWidget()
+        self.data_visualization_tabs.addTab(self.bar_graph_tab, "Bar Graph")
+        self.data_visualization_tabs.addTab(self.pie_chart_tab, "Pie Chart")
+        self.data_visualization_tabs.addTab(self.line_graph_tab, "Line Graph")
 
 
 def main():

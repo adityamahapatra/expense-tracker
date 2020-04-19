@@ -9,6 +9,7 @@ class MainWidget(QtWidgets.QMainWindow):
         super().__init__(parent=parent)
         self.setWindowFlags(QtCore.Qt.Window)
         self.setGeometry(150, 150, 800, 600)
+        self.setFixedSize(800, 600)
         self.setWindowIcon(QtGui.QIcon(constants.EXPENSES_ICON))
         central_widget = QtWidgets.QWidget()
         self.setCentralWidget(central_widget)
@@ -84,6 +85,10 @@ class TrackerWidget(MainWidget):
         self.remove_button = None
         self.graph_toggle_button = None
         self.category_list = None
+        self.data_visualization_tabs = None
+        self.bar_graph_tab = None
+        self.pie_chart_tab = None
+        self.line_graph_tab = None
         self.categories = [
             "Groceries",
             "Rent",
