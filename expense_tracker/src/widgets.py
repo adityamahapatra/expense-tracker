@@ -8,8 +8,8 @@ class MainWidget(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.setWindowFlags(QtCore.Qt.Window)
-        self.setGeometry(150, 150, 800, 600)
-        self.setFixedSize(800, 600)
+        self.setGeometry(150, 150, 1000, 600)
+        self.setFixedSize(1000, 600)
         self.setWindowIcon(QtGui.QIcon(constants.EXPENSES_ICON))
         central_widget = QtWidgets.QWidget()
         self.setCentralWidget(central_widget)
@@ -82,6 +82,8 @@ class TrackerWidget(MainWidget):
         self.custom_category_field = None
         self.price_label = None
         self.price_field = None
+        self.notes_label = None
+        self.notes_field = None
         self.calender = None
         self.expense_buttons_layout = None
         self.add_button = None

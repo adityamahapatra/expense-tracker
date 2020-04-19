@@ -111,6 +111,7 @@ class ExpenseTracker(TrackerWidget):
         self.left_layout = QtWidgets.QVBoxLayout()
         self.main_layout.addLayout(self.left_layout)
         self.expense_table_view = QtWidgets.QTableView()
+        self.expense_table_view.setMinimumWidth(575)
         self.left_layout.addWidget(self.expense_table_view)
         self.expense_table_view.setAlternatingRowColors(True)
         self.expense_table_view.setSelectionBehavior(
@@ -132,10 +133,13 @@ class ExpenseTracker(TrackerWidget):
         self.expense_table_view.horizontalHeader().setSectionResizeMode(
             2, QtWidgets.QHeaderView.Stretch
         )
+        self.expense_table_view.horizontalHeader().setSectionResizeMode(
+            3, QtWidgets.QHeaderView.Stretch
+        )
 
     def display_expense_data(self):
         model = QtGui.QStandardItemModel()
-        headers = ["Category", "Amount", "Date"]
+        headers = ["Category", "Amount", "Date", "Notes"]
         indices = [str(i) for i in range(1, 51)]
         model.setHorizontalHeaderLabels(headers)
         model.setVerticalHeaderLabels(indices)
@@ -152,7 +156,7 @@ class ExpenseTracker(TrackerWidget):
         self.category_label.setAlignment(QtCore.Qt.AlignHCenter)
         self.data_entry_layout.addWidget(self.category_label, 0, 0)
 
-        self.custom_category_label = QtWidgets.QLabel("Custom")
+        self.custom_category_label = QtWidgets.QLabel("Custom (optional)")
         self.custom_category_label.setAlignment(QtCore.Qt.AlignHCenter)
         self.data_entry_layout.addWidget(self.custom_category_label, 0, 1)
 
@@ -169,10 +173,23 @@ class ExpenseTracker(TrackerWidget):
         )
         self.data_entry_layout.addWidget(self.custom_category_field, 1, 1)
 
+        self.price_label = QtWidgets.QLabel("Amount")
+        self.price_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.data_entry_layout.addWidget(self.price_label, 2, 0)
+
+        self.notes_label = QtWidgets.QLabel("Note (optional)")
+        self.notes_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.data_entry_layout.addWidget(self.notes_label, 2, 1)
+
         self.price_field = QtWidgets.QLineEdit()
         self.price_field.setPlaceholderText("Enter amount")
         self.price_field.setStatusTip("Enter the expense amount")
-        self.right_layout.addWidget(self.price_field)
+        self.data_entry_layout.addWidget(self.price_field, 3, 0)
+
+        self.notes_field = QtWidgets.QLineEdit()
+        self.notes_field.setPlaceholderText("Add a note")
+        self.notes_field.setStatusTip("Add a note for the expense")
+        self.data_entry_layout.addWidget(self.notes_field, 3, 1)
 
         self.calender = QtWidgets.QCalendarWidget()
         self.calender.setMaximumHeight(175)
@@ -208,8 +225,9 @@ class ExpenseTracker(TrackerWidget):
         custom_category = self.custom_category_field.text()
         preset_category = self.category_list.currentText()
         category = custom_category.capitalize() or preset_category
+        note = self.notes_field.text()
         date = self.calender.selectedDate()
-        print(f"Added {amount} under {category} on {date.toString()}")
+        print(f"Added {amount} under {category} on {date.toString()}. Note: {note}")
         self.visualise_data()
 
     def remove_expense(self):
@@ -245,7 +263,7 @@ def main():
     splash_screen.showMessage(
         message, alignment=QtCore.Qt.AlignCenter | QtCore.Qt.AlignBottom,
     )
-    time.sleep(2)
+    # time.sleep(2)
     window = ExpenseTracker()
     window.setFocus()
     window.show()
