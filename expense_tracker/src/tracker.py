@@ -27,6 +27,10 @@ class ExpenseTracker(TrackerWidget):
     # noinspection PyTypeChecker
     def connections(self):
         self.exit_action.triggered.connect(self.close)
+        self.add_button.clicked.connect(self.add_expense)
+        self.add_expense_action.triggered.connect(self.add_expense)
+        self.remove_button.clicked.connect(self.remove_expense)
+        self.remove_expense_action.triggered.connect(self.remove_expense)
 
     def setup_file_menu(self):
         file_menu = self.menu.addMenu("File")
@@ -151,12 +155,12 @@ class ExpenseTracker(TrackerWidget):
         self.category_list.addItems(sorted(self.categories))
         self.data_entry_layout.addWidget(self.category_list, 1, 0)
 
-        self.category_field = QtWidgets.QLineEdit()
-        self.category_field.setPlaceholderText("Enter custom category")
-        self.category_field.setStatusTip(
+        self.custom_category_field = QtWidgets.QLineEdit()
+        self.custom_category_field.setPlaceholderText("Enter custom category")
+        self.custom_category_field.setStatusTip(
             "Enter a custom category not available in the list of presets"
         )
-        self.data_entry_layout.addWidget(self.category_field, 1, 1)
+        self.data_entry_layout.addWidget(self.custom_category_field, 1, 1)
 
         self.price_field = QtWidgets.QLineEdit()
         self.price_field.setPlaceholderText("Enter amount")
@@ -186,6 +190,27 @@ class ExpenseTracker(TrackerWidget):
         self.data_visualization_tabs.addTab(self.bar_graph_tab, "Bar Graph")
         self.data_visualization_tabs.addTab(self.pie_chart_tab, "Pie Chart")
         self.data_visualization_tabs.addTab(self.line_graph_tab, "Line Graph")
+
+    def add_expense(self):
+        amount = self.price_field.text()
+        if not amount:
+            self.message_box(
+                title="Missing amount", message="Please add the amount first!"
+            )
+            return False
+        custom_category = self.custom_category_field.text()
+        preset_category = self.category_list.currentText()
+        category = custom_category if custom_category else preset_category
+        date = self.calender.selectedDate()
+        print(f"Added {amount} under {category} on {date.toString()}")
+        self.visualise_data()
+
+    def remove_expense(self):
+        print("Expense removed!")
+        self.visualise_data()
+
+    def visualise_data(self):
+        pass
 
 
 def main():

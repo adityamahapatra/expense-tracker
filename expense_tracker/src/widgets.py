@@ -76,7 +76,7 @@ class TrackerWidget(MainWidget):
         self.expense_table_view = None
         self.category_label = None
         self.custom_category_label = None
-        self.category_field = None
+        self.custom_category_field = None
         self.price_label = None
         self.price_field = None
         self.calender = None
