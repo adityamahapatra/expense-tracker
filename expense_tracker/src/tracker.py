@@ -22,7 +22,7 @@ class ExpenseTracker(TrackerWidget):
         self.setup_currency_menu()
         self.setup_help_menu()
         self.setup_expense_table()
-        self.setup_data_feed()
+        self.setup_data_interface()
 
     # noinspection PyTypeChecker
     def connections(self):
@@ -130,29 +130,34 @@ class ExpenseTracker(TrackerWidget):
         model.setVerticalHeaderLabels(indices)
         self.expense_table_view.setModel(model)
 
-    def setup_data_feed(self):
+    def setup_data_interface(self):
         self.right_layout = QtWidgets.QVBoxLayout()
         self.main_layout.addLayout(self.right_layout)
 
         self.data_entry_layout = QtWidgets.QGridLayout()
         self.right_layout.addLayout(self.data_entry_layout)
+
         self.category_label = QtWidgets.QLabel("Category")
         self.category_label.setAlignment(QtCore.Qt.AlignHCenter)
         self.data_entry_layout.addWidget(self.category_label, 0, 0)
+
         self.custom_category_label = QtWidgets.QLabel("Custom")
         self.custom_category_label.setAlignment(QtCore.Qt.AlignHCenter)
         self.data_entry_layout.addWidget(self.custom_category_label, 0, 1)
+
         self.category_list = QtWidgets.QComboBox()
         self.category_list.setMinimumWidth(195)
         self.category_list.setStatusTip("Choose from a list of category presets")
         self.category_list.addItems(sorted(self.categories))
         self.data_entry_layout.addWidget(self.category_list, 1, 0)
+
         self.category_field = QtWidgets.QLineEdit()
         self.category_field.setPlaceholderText("Enter custom category")
         self.category_field.setStatusTip(
             "Enter a custom category not available in the list of presets"
         )
         self.data_entry_layout.addWidget(self.category_field, 1, 1)
+
         self.price_field = QtWidgets.QLineEdit()
         self.price_field.setPlaceholderText("Enter amount")
         self.price_field.setStatusTip("Enter the expense amount")
@@ -164,9 +169,11 @@ class ExpenseTracker(TrackerWidget):
 
         self.expense_buttons_layout = QtWidgets.QHBoxLayout()
         self.right_layout.addLayout(self.expense_buttons_layout)
+
         self.add_button = QtWidgets.QPushButton("Add")
         self.add_button.setStatusTip("Add the expense")
         self.expense_buttons_layout.addWidget(self.add_button)
+
         self.remove_button = QtWidgets.QPushButton("Remove")
         self.remove_button.setStatusTip("Remove the expense")
         self.expense_buttons_layout.addWidget(self.remove_button)
