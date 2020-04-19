@@ -112,4 +112,7 @@ class TrackerWidget(MainWidget):
             "Miscellaneous",
             "Electronics",
             "Furniture",
+            "Household Expenses",
+            "Pets",
+            "Automobile",
         ]

@@ -263,7 +263,7 @@ def main():
     splash_screen.showMessage(
         message, alignment=QtCore.Qt.AlignCenter | QtCore.Qt.AlignBottom,
     )
-    # time.sleep(2)
+    time.sleep(2)
     window = ExpenseTracker()
     window.setFocus()
     window.show()
