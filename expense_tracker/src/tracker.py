@@ -23,6 +23,7 @@ class ExpenseTracker(TrackerWidget):
         self.setup_help_menu()
         self.setup_expense_table()
         self.setup_data_interface()
+        self.status.showMessage("Welcome to the Expense Jar!")
 
     # noinspection PyTypeChecker
     def connections(self):
@@ -64,30 +65,35 @@ class ExpenseTracker(TrackerWidget):
         rupee_icon = QtGui.QIcon(constants.RUPEE_ICON)
         self.rupee_action = QtWidgets.QAction("Rupee", self)
         self.rupee_action.setIcon(rupee_icon)
+        self.rupee_action.setCheckable(True)
         self.rupee_action.setStatusTip("Rupee")
         currency_menu.addAction(self.rupee_action)
 
         dollar_icon = QtGui.QIcon(constants.DOLLAR_ICON)
         self.dollar_action = QtWidgets.QAction("Dollar", self)
         self.dollar_action.setIcon(dollar_icon)
+        self.dollar_action.setCheckable(True)
         self.dollar_action.setStatusTip("Dollar")
         currency_menu.addAction(self.dollar_action)
 
         euro_icon = QtGui.QIcon(constants.EURO_ICON)
         self.euro_action = QtWidgets.QAction("Euro", self)
         self.euro_action.setIcon(euro_icon)
+        self.euro_action.setCheckable(True)
         self.euro_action.setStatusTip("Euro")
         currency_menu.addAction(self.euro_action)
 
         british_pound_icon = QtGui.QIcon(constants.BRITISH_POUND_ICON)
         self.british_pound_action = QtWidgets.QAction("British Pound", self)
         self.british_pound_action.setIcon(british_pound_icon)
+        self.british_pound_action.setCheckable(True)
         self.british_pound_action.setStatusTip("British Pound")
         currency_menu.addAction(self.british_pound_action)
 
         japanese_yen_icon = QtGui.QIcon(constants.JAPANESE_YEN_ICON)
         self.japanese_yen_action = QtWidgets.QAction("Japanese Yen", self)
         self.japanese_yen_action.setIcon(japanese_yen_icon)
+        self.japanese_yen_action.setCheckable(True)
         self.japanese_yen_action.setStatusTip("Japanese Yen")
         currency_menu.addAction(self.japanese_yen_action)
 
@@ -153,11 +159,11 @@ class ExpenseTracker(TrackerWidget):
         self.right_layout.addLayout(self.data_entry_layout)
 
         self.category_label = QtWidgets.QLabel("Category")
-        self.category_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.category_label.setAlignment(QtCore.Qt.AlignLeft)
         self.data_entry_layout.addWidget(self.category_label, 0, 0)
 
         self.custom_category_label = QtWidgets.QLabel("Custom (optional)")
-        self.custom_category_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.custom_category_label.setAlignment(QtCore.Qt.AlignLeft)
         self.data_entry_layout.addWidget(self.custom_category_label, 0, 1)
 
         self.category_list = QtWidgets.QComboBox()
@@ -174,11 +180,11 @@ class ExpenseTracker(TrackerWidget):
         self.data_entry_layout.addWidget(self.custom_category_field, 1, 1)
 
         self.price_label = QtWidgets.QLabel("Amount")
-        self.price_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.price_label.setAlignment(QtCore.Qt.AlignLeft)
         self.data_entry_layout.addWidget(self.price_label, 2, 0)
 
         self.notes_label = QtWidgets.QLabel("Note (optional)")
-        self.notes_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.notes_label.setAlignment(QtCore.Qt.AlignLeft)
         self.data_entry_layout.addWidget(self.notes_label, 2, 1)
 
         self.price_field = QtWidgets.QLineEdit()
