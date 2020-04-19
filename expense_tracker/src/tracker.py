@@ -37,16 +37,14 @@ class ExpenseTracker(TrackerWidget):
     def setup_file_menu(self):
         file_menu = self.menu.addMenu("File")
 
-        add_icon = QtGui.QIcon(constants.ADD_ICON)
         self.add_expense_action = QtWidgets.QAction("Add Expense", self)
-        self.add_expense_action.setIcon(add_icon)
+        self.add_expense_action.setIcon(self.add_icon)
         self.add_expense_action.setStatusTip("Add a new expense")
         self.add_expense_action.setShortcut("Ctrl+A")
         file_menu.addAction(self.add_expense_action)
 
-        remove_icon = QtGui.QIcon(constants.REMOVE_ICON)
         self.remove_expense_action = QtWidgets.QAction("Remove Expense", self)
-        self.remove_expense_action.setIcon(remove_icon)
+        self.remove_expense_action.setIcon(self.remove_icon)
         self.remove_expense_action.setStatusTip("Remove an existing expense")
         self.remove_expense_action.setShortcut("Ctrl+R")
         file_menu.addAction(self.remove_expense_action)
@@ -204,11 +202,13 @@ class ExpenseTracker(TrackerWidget):
         self.expense_buttons_layout = QtWidgets.QHBoxLayout()
         self.right_layout.addLayout(self.expense_buttons_layout)
 
-        self.add_button = QtWidgets.QPushButton("Add")
+        self.add_button = QtWidgets.QPushButton(" Add")
+        self.add_button.setIcon(self.add_icon)
         self.add_button.setStatusTip("Add the expense")
         self.expense_buttons_layout.addWidget(self.add_button)
 
-        self.remove_button = QtWidgets.QPushButton("Remove")
+        self.remove_button = QtWidgets.QPushButton(" Remove")
+        self.remove_button.setIcon(self.remove_icon)
         self.remove_button.setStatusTip("Remove the expense")
         self.expense_buttons_layout.addWidget(self.remove_button)
 
@@ -253,7 +253,7 @@ class ExpenseTracker(TrackerWidget):
 
 def main():
     application = QtWidgets.QApplication(sys.argv)
-    application.setStyle("Plastique")
+    application.setStyle("Fusion")
     pixmap = QtGui.QPixmap(constants.SPLASH_SCREEN_IMAGE)
     splash_screen = QtWidgets.QSplashScreen(pixmap)
     splash_screen.show()

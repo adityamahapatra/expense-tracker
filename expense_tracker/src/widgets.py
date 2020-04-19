@@ -63,7 +63,9 @@ class TrackerWidget(MainWidget):
         super().__init__(parent=parent)
         self.menu = self.menuBar()
         self.status = self.statusBar()
+        self.add_icon = QtGui.QIcon(constants.ADD_ICON)
         self.add_expense_action = None
+        self.remove_icon = QtGui.QIcon(constants.REMOVE_ICON)
         self.remove_expense_action = None
         self.exit_action = None
         self.rupee_action = None
