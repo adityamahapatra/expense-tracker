@@ -68,6 +68,7 @@ class TrackerWidget(MainWidget):
         self.remove_icon = QtGui.QIcon(constants.REMOVE_ICON)
         self.remove_expense_action = None
         self.exit_action = None
+        self.currency_action_group = None
         self.rupee_action = None
         self.dollar_action = None
         self.euro_action = None

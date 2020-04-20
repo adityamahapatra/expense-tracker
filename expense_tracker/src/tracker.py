@@ -32,6 +32,7 @@ class ExpenseTracker(TrackerWidget):
         self.add_expense_action.triggered.connect(self.add_expense)
         self.remove_button.clicked.connect(self.remove_expense)
         self.remove_expense_action.triggered.connect(self.remove_expense)
+        self.currency_action_group.triggered.connect(self.currency_selection)
         self.contact_action.triggered.connect(self.contact_me)
 
     def setup_file_menu(self):
@@ -59,12 +60,15 @@ class ExpenseTracker(TrackerWidget):
 
     def setup_currency_menu(self):
         currency_menu = self.menu.addMenu("Currency")
+        self.currency_action_group = QtWidgets.QActionGroup(currency_menu)
+        self.currency_action_group.setExclusive(True)
 
         rupee_icon = QtGui.QIcon(constants.RUPEE_ICON)
         self.rupee_action = QtWidgets.QAction("Rupee", self)
         self.rupee_action.setIcon(rupee_icon)
         self.rupee_action.setCheckable(True)
         self.rupee_action.setStatusTip("Rupee")
+        self.rupee_action.setActionGroup(self.currency_action_group)
         currency_menu.addAction(self.rupee_action)
 
         dollar_icon = QtGui.QIcon(constants.DOLLAR_ICON)
@@ -72,6 +76,7 @@ class ExpenseTracker(TrackerWidget):
         self.dollar_action.setIcon(dollar_icon)
         self.dollar_action.setCheckable(True)
         self.dollar_action.setStatusTip("Dollar")
+        self.dollar_action.setActionGroup(self.currency_action_group)
         currency_menu.addAction(self.dollar_action)
 
         euro_icon = QtGui.QIcon(constants.EURO_ICON)
@@ -79,6 +84,7 @@ class ExpenseTracker(TrackerWidget):
         self.euro_action.setIcon(euro_icon)
         self.euro_action.setCheckable(True)
         self.euro_action.setStatusTip("Euro")
+        self.euro_action.setActionGroup(self.currency_action_group)
         currency_menu.addAction(self.euro_action)
 
         british_pound_icon = QtGui.QIcon(constants.BRITISH_POUND_ICON)
@@ -86,6 +92,7 @@ class ExpenseTracker(TrackerWidget):
         self.british_pound_action.setIcon(british_pound_icon)
         self.british_pound_action.setCheckable(True)
         self.british_pound_action.setStatusTip("British Pound")
+        self.british_pound_action.setActionGroup(self.currency_action_group)
         currency_menu.addAction(self.british_pound_action)
 
         japanese_yen_icon = QtGui.QIcon(constants.JAPANESE_YEN_ICON)
@@ -93,7 +100,13 @@ class ExpenseTracker(TrackerWidget):
         self.japanese_yen_action.setIcon(japanese_yen_icon)
         self.japanese_yen_action.setCheckable(True)
         self.japanese_yen_action.setStatusTip("Japanese Yen")
+        self.japanese_yen_action.setActionGroup(self.currency_action_group)
         currency_menu.addAction(self.japanese_yen_action)
+
+    def currency_selection(self):
+        for currency in self.currency_action_group.actions():
+            if currency.isChecked():
+                print(currency.text())
 
     def setup_help_menu(self):
         help_menu = self.menu.addMenu("Help")
