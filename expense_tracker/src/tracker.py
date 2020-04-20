@@ -210,6 +210,7 @@ class ExpenseTracker(TrackerWidget):
 
         self.calender = QtWidgets.QCalendarWidget()
         self.calender.setMaximumHeight(175)
+        self.calender.setStatusTip("Choose a date for the expense")
         self.right_layout.addWidget(self.calender)
 
         self.expense_buttons_layout = QtWidgets.QHBoxLayout()
@@ -230,9 +231,15 @@ class ExpenseTracker(TrackerWidget):
         self.bar_graph_tab = QtWidgets.QWidget()
         self.pie_chart_tab = QtWidgets.QWidget()
         self.line_graph_tab = QtWidgets.QWidget()
-        self.data_visualization_tabs.addTab(self.bar_graph_tab, "Bar Graph")
-        self.data_visualization_tabs.addTab(self.pie_chart_tab, "Pie Chart")
-        self.data_visualization_tabs.addTab(self.line_graph_tab, "Line Graph")
+        self.data_visualization_tabs.addTab(
+            self.bar_graph_tab, self.bar_graph_icon, " Bar Graph",
+        )
+        self.data_visualization_tabs.addTab(
+            self.pie_chart_tab, self.pie_chart_icon, " Pie Chart"
+        )
+        self.data_visualization_tabs.addTab(
+            self.line_graph_tab, self.line_graph_icon, " Line Graph"
+        )
 
     def add_expense(self):
         amount = self.price_field.text()

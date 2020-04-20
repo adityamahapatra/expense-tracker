@@ -95,8 +95,11 @@ class TrackerWidget(MainWidget):
         self.category_list = None
         self.data_visualization_tabs = None
         self.bar_graph_tab = None
+        self.bar_graph_icon = QtGui.QIcon(constants.BAR_GRAPH_ICON)
         self.pie_chart_tab = None
+        self.pie_chart_icon = QtGui.QIcon(constants.PIE_CHART_ICON)
         self.line_graph_tab = None
+        self.line_graph_icon = QtGui.QIcon(constants.LINE_GRAPH_ICON)
         self.categories = [
             "Groceries",
             "Rent",
