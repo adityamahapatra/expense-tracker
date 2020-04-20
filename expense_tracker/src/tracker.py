@@ -4,7 +4,7 @@ import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import expense_tracker.src.constants as constants
-from expense_tracker.src.widgets import TrackerWidget
+from expense_tracker.src.widgets import TrackerWidget, ExpenseEditorWidget
 
 
 class ExpenseTracker(TrackerWidget):
@@ -32,6 +32,7 @@ class ExpenseTracker(TrackerWidget):
         self.add_expense_action.triggered.connect(self.add_expense)
         self.remove_button.clicked.connect(self.remove_expense)
         self.remove_expense_action.triggered.connect(self.remove_expense)
+        self.edit_expense_action.triggered.connect(self.display_expense_editor)
         self.currency_action_group.triggered.connect(self.currency_selection)
         self.contact_action.triggered.connect(self.contact_me)
 
@@ -49,6 +50,12 @@ class ExpenseTracker(TrackerWidget):
         self.remove_expense_action.setStatusTip("Remove an existing expense")
         self.remove_expense_action.setShortcut("Ctrl+R")
         file_menu.addAction(self.remove_expense_action)
+
+        self.edit_expense_action = QtWidgets.QAction("Edit Expense", self)
+        self.edit_expense_action.setIcon(QtGui.QIcon(constants.EDIT_BUTTON_ICON))
+        self.edit_expense_action.setStatusTip("Edit an existing expense")
+        self.edit_expense_action.setShortcut("Ctrl+E")
+        file_menu.addAction(self.edit_expense_action)
 
         exit_icon = QtGui.QIcon(constants.EXIT_ICON)
         self.exit_action = QtWidgets.QAction("Exit", self)
@@ -157,9 +164,9 @@ class ExpenseTracker(TrackerWidget):
     def display_expense_data(self):
         model = QtGui.QStandardItemModel()
         headers = ["Category", "Amount", "Date", "Notes"]
-        indices = [str(i) for i in range(1, 51)]
+        self.indices = [str(i) for i in range(1, 51)]
         model.setHorizontalHeaderLabels(headers)
-        model.setVerticalHeaderLabels(indices)
+        model.setVerticalHeaderLabels(self.indices)
         self.expense_table_view.setModel(model)
 
     def setup_data_interface(self):
@@ -259,6 +266,26 @@ class ExpenseTracker(TrackerWidget):
     def remove_expense(self):
         print("Expense removed!")
         self.visualise_data()
+
+    def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
+        self.context_menu = QtWidgets.QMenu()
+        self.context_menu.addAction(self.edit_expense_action)
+        self.context_menu.popup(QtGui.QCursor.pos())
+
+    def display_expense_editor(self):
+        self.expense_editor_window = ExpenseEditorWidget(len(self.indices), parent=self)
+        self.expense_editor_window.cancel_edit_button.clicked.connect(
+            self.expense_editor_window.close
+        )
+        self.expense_editor_window.edit_expense_button.clicked.connect(
+            self.edit_expense
+        )
+        self.expense_editor_window.show()
+
+    def edit_expense(self):
+        row = self.expense_editor_window.index_spin_box.value()
+        print(f"Expense edited at row: {row}")
+        self.expense_editor_window.close()
 
     def visualise_data(self):
         pass

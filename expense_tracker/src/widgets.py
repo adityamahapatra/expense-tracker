@@ -80,6 +80,7 @@ class TrackerWidget(MainWidget):
         self.right_layout = None
         self.data_entry_layout = None
         self.expense_table_view = None
+        self.indices = None
         self.category_label = None
         self.custom_category_label = None
         self.custom_category_field = None
@@ -100,6 +101,10 @@ class TrackerWidget(MainWidget):
         self.pie_chart_icon = QtGui.QIcon(constants.PIE_CHART_ICON)
         self.line_graph_tab = None
         self.line_graph_icon = QtGui.QIcon(constants.LINE_GRAPH_ICON)
+        self.context_menu = None
+        self.edit_expense_action = None
+        self.expense_editor_window = None
+        self.table_row = None
         self.categories = [
             "Groceries",
             "Rent",
@@ -122,3 +127,90 @@ class TrackerWidget(MainWidget):
             "Pets",
             "Automobile",
         ]
+
+
+class ExpenseEditorWidget(MainWidget):
+
+    def __init__(self, rows, parent=None):
+        super().__init__(parent=parent)
+        self.rows = rows
+        self.expense_editor_layout = None
+        self.edited_data_layout = None
+        self.edit_buttons_layout = None
+        self.expense_index_label = None
+        self.index_spin_box = None
+        self.edit_category_label = None
+        self.edit_price_label = None
+        self.edit_note_label = None
+        self.edit_category_field = None
+        self.edit_amount_field = None
+        self.edit_note_field = None
+        self.edit_expense_button = None
+        self.cancel_edit_button = None
+        self.calender = None
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowFlags(QtCore.Qt.Window)
+        self.setWindowTitle("Edit")
+        self.setWindowIcon(QtGui.QIcon(constants.EDIT_EXPENSE_WINDOW_ICON))
+        self.setGeometry(150, 150, 600, 325)
+        self.setFixedSize(600, 325)
+        self.center()
+
+        central_widget = QtWidgets.QWidget()
+        self.setCentralWidget(central_widget)
+        self.expense_editor_layout = QtWidgets.QVBoxLayout()
+        central_widget.setLayout(self.expense_editor_layout)
+
+        self.edited_data_layout = QtWidgets.QGridLayout()
+        self.expense_editor_layout.addLayout(self.edited_data_layout)
+
+        self.expense_index_label = QtWidgets.QLabel("Index")
+        self.edited_data_layout.addWidget(self.expense_index_label, 0, 0)
+
+        self.edit_category_label = QtWidgets.QLabel("Category")
+        self.edited_data_layout.addWidget(self.edit_category_label, 0, 1)
+
+        self.edit_price_label = QtWidgets.QLabel("Amount")
+        self.edited_data_layout.addWidget(self.edit_price_label, 0, 2)
+
+        self.edit_note_label = QtWidgets.QLabel("Note")
+        self.edited_data_layout.addWidget(self.edit_note_label, 0, 3)
+
+        self.index_spin_box = QtWidgets.QSpinBox()
+        self.index_spin_box.setRange(1, self.rows)
+        self.edited_data_layout.addWidget(self.index_spin_box, 1, 0)
+
+        self.edit_category_field = QtWidgets.QLineEdit()
+        self.edit_category_field.setPlaceholderText("Enter category here")
+        self.edited_data_layout.addWidget(self.edit_category_field, 1, 1)
+
+        self.edit_amount_field = QtWidgets.QLineEdit()
+        self.edit_amount_field.setPlaceholderText("Enter amount here")
+        self.edited_data_layout.addWidget(self.edit_amount_field, 1, 2)
+
+        self.edit_note_field = QtWidgets.QLineEdit()
+        self.edit_note_field.setPlaceholderText("Add note here")
+        self.edited_data_layout.addWidget(self.edit_note_field, 1, 3)
+        self.expense_editor_layout.addSpacerItem(QtWidgets.QSpacerItem(0, 10))
+
+        self.calender = QtWidgets.QCalendarWidget()
+        self.expense_editor_layout.addWidget(self.calender)
+        self.expense_editor_layout.addSpacerItem(QtWidgets.QSpacerItem(0, 10))
+
+        self.edit_buttons_layout = QtWidgets.QHBoxLayout()
+        self.expense_editor_layout.addLayout(self.edit_buttons_layout)
+
+        self.edit_buttons_layout.addSpacing(150)
+        self.edit_expense_button = QtWidgets.QPushButton(" Edit")
+        self.edit_expense_button.setIcon(QtGui.QIcon(constants.EDIT_BUTTON_ICON))
+        self.edit_buttons_layout.addWidget(self.edit_expense_button)
+        self.cancel_edit_button = QtWidgets.QPushButton(" Cancel")
+        self.cancel_edit_button.setIcon(QtGui.QIcon(constants.CANCEL_ICON))
+        self.edit_buttons_layout.addWidget(self.cancel_edit_button)
+        self.edit_buttons_layout.addSpacing(150)
+        self.expense_editor_layout.addSpacerItem(QtWidgets.QSpacerItem(0, 10))
+
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        self.close()
