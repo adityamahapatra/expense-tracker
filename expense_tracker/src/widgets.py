@@ -80,6 +80,7 @@ class TrackerWidget(MainWidget):
         self.right_layout = None
         self.data_entry_layout = None
         self.expense_table_view = None
+        self.selection = None
         self.indices = None
         self.category_label = None
         self.custom_category_label = None
@@ -104,7 +105,7 @@ class TrackerWidget(MainWidget):
         self.context_menu = None
         self.edit_expense_action = None
         self.expense_editor_window = None
-        self.table_row = None
+        self.about_window = None
         self.categories = [
             "Groceries",
             "Rent",
@@ -211,6 +212,71 @@ class ExpenseEditorWidget(MainWidget):
         self.edit_buttons_layout.addWidget(self.cancel_edit_button)
         self.edit_buttons_layout.addSpacing(150)
         self.expense_editor_layout.addSpacerItem(QtWidgets.QSpacerItem(0, 10))
+
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        self.close()
+
+
+class AboutWindow(MainWidget):
+
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+        self.about_window_layout = None
+        self.about_image = None
+        self.pixmap = None
+        self.version_label = None
+        self.dev_label = None
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowFlags(QtCore.Qt.Window)
+        self.setWindowTitle("About me")
+        self.setWindowIcon(QtGui.QIcon(constants.ABOUT_ICON))
+        self.setGeometry(150, 150, 400, 200)
+        self.setFixedSize(400, 200)
+        self.center()
+
+        about_window_central_widget = QtWidgets.QWidget()
+        self.setCentralWidget(about_window_central_widget)
+
+        self.about_window_layout = QtWidgets.QVBoxLayout()
+        about_window_central_widget.setLayout(self.about_window_layout)
+
+        self.pixmap = QtGui.QPixmap(constants.SPLASH_SCREEN_IMAGE)
+        self.about_image = QtWidgets.QLabel()
+        self.about_image.setPixmap(self.pixmap)
+        self.about_window_layout.addWidget(self.about_image)
+
+        self.version_label = QtWidgets.QLabel()
+        version_text = """
+            <p style="width:20px;
+                      height:20px;
+                      color:#708090;
+                      font-size:15px;
+                      font-family:'Arial';">
+                <b>v1.0.0</b>
+            </p>
+            """
+        self.version_label.setText(version_text)
+        self.version_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.about_window_layout.addWidget(self.version_label)
+
+        self.dev_label = QtWidgets.QLabel()
+        dev_text = """
+            <p style="width:20px;
+                      height:20px;
+                      color:#708090;
+                      font-size:15px;
+                      font-family:'Ink Free';">
+                <b><i>© Aditya Mahapatra</i></b>
+            </p>
+            """
+        self.dev_label.setText(dev_text)
+        self.dev_label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.about_window_layout.addWidget(self.dev_label)
+
+    def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
+        self.close()
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         self.close()

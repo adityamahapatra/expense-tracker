@@ -4,10 +4,10 @@ import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import expense_tracker.src.constants as constants
-from expense_tracker.src.widgets import TrackerWidget, ExpenseEditorWidget
+import expense_tracker.src.widgets as widgets
 
 
-class ExpenseTracker(TrackerWidget):
+class ExpenseTracker(widgets.TrackerWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent=parent)
@@ -35,6 +35,7 @@ class ExpenseTracker(TrackerWidget):
         self.edit_expense_action.triggered.connect(self.display_expense_editor)
         self.currency_action_group.triggered.connect(self.currency_selection)
         self.contact_action.triggered.connect(self.contact_me)
+        self.about_action.triggered.connect(self.about)
 
     def setup_file_menu(self):
         file_menu = self.menu.addMenu("File")
@@ -144,6 +145,7 @@ class ExpenseTracker(TrackerWidget):
         self.expense_table_view.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers
         )
+        self.expense_table_view.setFocusPolicy(QtCore.Qt.NoFocus)
         self.display_expense_data()
         self._set_column_width()
 
@@ -273,7 +275,11 @@ class ExpenseTracker(TrackerWidget):
         self.context_menu.popup(QtGui.QCursor.pos())
 
     def display_expense_editor(self):
-        self.expense_editor_window = ExpenseEditorWidget(len(self.indices), parent=self)
+        self.expense_editor_window = widgets.ExpenseEditorWidget(
+            len(self.indices), parent=self
+        )
+        self.selection = self.expense_table_view.currentIndex()
+        self.expense_editor_window.index_spin_box.setValue(self.selection.row() + 1)
         self.expense_editor_window.cancel_edit_button.clicked.connect(
             self.expense_editor_window.close
         )
@@ -296,6 +302,10 @@ class ExpenseTracker(TrackerWidget):
             message="adityamahapatra@protonmail.com",
             icon=QtWidgets.QMessageBox.Information
         )
+
+    def about(self):
+        self.about_window = widgets.AboutWindow(parent=self)
+        self.about_window.show()
 
 
 def main():
