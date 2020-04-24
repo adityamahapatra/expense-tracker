@@ -35,7 +35,7 @@ def execute_(query):
 
 def fetch_all_records():
     with dbcursor() as cursor:
-        cursor.execute("SELECT * FROM expenses")
+        cursor.execute("SELECT * FROM expenses;")
         return cursor.fetchall()
 
 
