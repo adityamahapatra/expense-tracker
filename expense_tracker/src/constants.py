@@ -1,6 +1,7 @@
 import os
 
 ICONS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "icons")
+DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "databases")
 EXPENSES_ICON = os.path.join(ICONS_PATH, "expenses.png")
 ADD_ICON = os.path.join(ICONS_PATH, "add.png")
 REMOVE_ICON = os.path.join(ICONS_PATH, "remove.png")
@@ -19,3 +20,4 @@ LINE_GRAPH_ICON = os.path.join(ICONS_PATH, "line_graph.png")
 EDIT_EXPENSE_WINDOW_ICON = os.path.join(ICONS_PATH, "edit_window.png")
 EDIT_BUTTON_ICON = os.path.join(ICONS_PATH, "edit_button.png")
 CANCEL_ICON = os.path.join(ICONS_PATH, "cancel.png")
+DATABASE = f"sqlite:///{DB_PATH}/expense_jar_db.sqlite"
